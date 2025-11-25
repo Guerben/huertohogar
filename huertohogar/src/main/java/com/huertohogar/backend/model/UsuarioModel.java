@@ -18,21 +18,22 @@ public class UsuarioModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id_usuario;
 
-    @Column(nullable = false, unique = true, length = 100)
+    @Column(nullable = false, length = 100)
     private String nombre; // nombre completo del usuario
 
     @Column(nullable = false, unique = true, length = 100)
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String password;
 
     @Column(length = 200)
     private String direccion;
 
-    @Column(nullable = false, length = 20)
+    @Column(length = 20)
     private String telefono;
 
     @Column(name = "rol_id")
@@ -131,6 +132,5 @@ public class UsuarioModel {
     public void setRol(RolModel rol) {
         this.rol = rol;
     }
-
 
 }

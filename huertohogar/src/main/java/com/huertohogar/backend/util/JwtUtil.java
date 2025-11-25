@@ -1,12 +1,16 @@
 package com.huertohogar.backend.util;
 
+import java.security.Key;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.Keys;
 
-import java.util.Date;
-import java.security.Key;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtUtil {
@@ -16,11 +20,11 @@ public class JwtUtil {
     @Value("${jwt.expiration:86400000}")
     private long expiration;
 
-    private Key getStringKey(){
+    private Key getStringKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    public String generarToken(String email, Long userId, String rol){
+    public String generarToken(String email, Long userId, String rol) {
         Claims claims = Jwts.claims().setSubject(email);
         claims.put("userId", userId);
         claims.put("rol", rol);
@@ -37,43 +41,50 @@ public class JwtUtil {
 
     }
 
-    public boolean validarToken(String token){
+    public boolean validarToken(String token) {
         try {
             Jwts.parserBuilder()
-                    .setSigningKey(getSigningKey())
+                    .setSigningKey(getStringKey())
                     .build()
                     .parseClaimsJws(token);
             return true;
-        } catch (JwtException | IllegalArgumentException e){
+        } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
     }
 
     private Key getSigningKey() {
-        return null;
+        return getStringKey();
     }
 
-    public String obtenerEmailDelToken(String token){
-        Key getSigningKey = null;
-        Claims claims =Jwts.parserBuilder()
-                .setSigningKey(getSigningKey)
+    public String obtenerEmailDelToken(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(getStringKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
         return claims.getSubject();
     }
 
-    public Long obtenerUserIdDelToken(String token){
+    public Long obtenerUserIdDelToken(String token) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
 
-        return claims.get("userId", Long.class);
+        Object userIdObj = claims.get("userId");
+        if (userIdObj instanceof Number) {
+            return ((Number) userIdObj).longValue();
+        }
+        try {
+            return Long.valueOf(String.valueOf(userIdObj));
+        } catch (Exception e) {
+            return null;
+        }
     }
 
-    public String obtenerRolDelToken(String token){
+    public String obtenerRolDelToken(String token) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
                 .build()

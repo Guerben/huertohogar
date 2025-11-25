@@ -1,5 +1,7 @@
 {
     "configurations": [
+
+        
         {
             "type": "java",
             "name": "HuertohogarBackendApplication",
@@ -11,7 +13,8 @@
             "type": "java",
             "name": "Spring Boot-HuertohogarBackendApplication<huertohogar>",
             "request": "launch",
-            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            
             "mainClass": "com.huertohogar.huertohogar.HuertohogarBackendApplication",
             "projectName": "huertohogar",
             "args": "",

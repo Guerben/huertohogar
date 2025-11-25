@@ -22,11 +22,11 @@ import com.huertohogar.backend.service.UsuarioService;
 @RequestMapping("/api/usuarios")
 @CrossOrigin(origins = "*")
 public class UsuarioController {
-    
+
     @Autowired
     private UsuarioService usuarioService;
-    
-    @PostMapping("/api/crear")
+
+    @PostMapping("/crear")
     public ResponseEntity<?> crearUsuario(@RequestBody UsuarioDTO usuario) {
         try {
             UsuarioDTO nuevoUsuario = usuarioService.crearUsuario(usuario);
@@ -35,13 +35,13 @@ public class UsuarioController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    
+
     @GetMapping
     public ResponseEntity<List<UsuarioDTO>> obtenerTodosLosUsuarios() {
         List<UsuarioDTO> usuarios = usuarioService.obtenerTodosLosUsuarios();
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
-    
+
     @GetMapping("/{id}")
     public ResponseEntity<?> obtenerUsuarioPorId(@PathVariable Long id) {
         try {
@@ -51,7 +51,7 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-    
+
     @GetMapping("/email/{email}")
     public ResponseEntity<?> obtenerUsuarioPorEmail(@PathVariable String email) {
         try {
@@ -61,16 +61,16 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-    
+
     @GetMapping("/rol/{rolId}")
     public ResponseEntity<List<UsuarioDTO>> obtenerUsuariosPorRol(@PathVariable Long rolId) {
         List<UsuarioDTO> usuarios = usuarioService.obtenerUsuarioPorRol(rolId);
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
-    
-    @PutMapping("/api/actualizar/{id}")
+
+    @PutMapping("/actualizar/{id}")
     public ResponseEntity<?> actualizarUsuario(
-            @PathVariable Long id, 
+            @PathVariable Long id,
             @RequestBody UsuarioDTO usuario) {
         try {
             UsuarioDTO usuarioActualizado = usuarioService.actualizarUsuario(id, usuario);
@@ -79,7 +79,7 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-    
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminarUsuario(@PathVariable Long id) {
         try {

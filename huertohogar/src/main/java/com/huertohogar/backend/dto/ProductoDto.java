@@ -1,44 +1,40 @@
-package com.huertohogar.backend.model;
+package com.huertohogar.backend.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "productos")
-public class Producto {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long idProducto;
-
-    @Column(nullable = false, unique = true)
+public class ProductoDto {
+    private Long id;
     private String codigo;
-
-    @Column(nullable = false)
     private String nombre;
-
     private String descripcion;
     private Double precio;
     private Integer stock;
     private String origen;
-    @Column(name = "imagen_url")
     private String imagenUrl;
 
-    public Long getIdProducto() {
-        return idProducto;
+    public ProductoDto() {
     }
 
-    public void setIdProducto(Long idProducto) {
-        this.idProducto = idProducto;
+    public ProductoDto(Long id, String codigo, String nombre, String descripcion, Double precio, Integer stock,
+            String origen, String imagenUrl) {
+        this.id = id;
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.stock = stock;
+        this.origen = origen;
+        this.imagenUrl = imagenUrl;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCodigo() {
-        return this.codigo;
+        return codigo;
     }
 
     public void setCodigo(String codigo) {
@@ -46,7 +42,7 @@ public class Producto {
     }
 
     public String getNombre() {
-        return this.nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
@@ -54,7 +50,7 @@ public class Producto {
     }
 
     public String getDescripcion() {
-        return this.descripcion;
+        return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
@@ -62,7 +58,7 @@ public class Producto {
     }
 
     public Double getPrecio() {
-        return this.precio;
+        return precio;
     }
 
     public void setPrecio(Double precio) {
@@ -70,7 +66,7 @@ public class Producto {
     }
 
     public Integer getStock() {
-        return this.stock;
+        return stock;
     }
 
     public void setStock(Integer stock) {
@@ -78,7 +74,7 @@ public class Producto {
     }
 
     public String getOrigen() {
-        return this.origen;
+        return origen;
     }
 
     public void setOrigen(String origen) {
@@ -86,11 +82,10 @@ public class Producto {
     }
 
     public String getImagenUrl() {
-        return this.imagenUrl;
+        return imagenUrl;
     }
 
     public void setImagenUrl(String imagenUrl) {
         this.imagenUrl = imagenUrl;
     }
-
 }

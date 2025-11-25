@@ -28,10 +28,8 @@ public class CategoriaController {
     @Autowired
     private CategoriaService categoriaService;
 
-
-
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("path")
+    @PostMapping("/crear")
     public ResponseEntity<?> crearCategoria(@RequestBody CategoriaDto categoria) {
         try {
             CategoriaDto nuevaCategoria = categoriaService.crearCategoria(categoria);
@@ -44,19 +42,19 @@ public class CategoriaController {
         }
     }
 
-    @GetMapping("path")
+    @GetMapping
     public ResponseEntity<List<CategoriaDto>> obtenerCategorias() {
         List<CategoriaDto> categorias = categoriaService.obtenerCategorias();
         return new ResponseEntity<>(categorias, HttpStatus.OK);
     }
 
-    @GetMapping("path/activos")
+    @GetMapping("/activos")
     public ResponseEntity<List<CategoriaDto>> obtenerCategoriasActivos() {
         List<CategoriaDto> categorias = categoriaService.obtenerCategoriasActivos();
         return new ResponseEntity<>(categorias, HttpStatus.OK);
     }
 
-    @GetMapping("path/id/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<CategoriaDto> obtenerCategoriaPorId(@PathVariable Long id) {
         CategoriaDto categoria = categoriaService.obtenerCategoriaPorId(id);
         if (categoria != null) {
@@ -66,7 +64,7 @@ public class CategoriaController {
         }
     }
 
-    @GetMapping("path/buscar/{texto}")
+    @GetMapping("/buscar/{texto}")
     public ResponseEntity<List<CategoriaDto>> buscarCategorias(@PathVariable String texto) {
         List<CategoriaDto> categorias = categoriaService.buscarCategorias(texto);
         return new ResponseEntity<>(categorias, HttpStatus.OK);

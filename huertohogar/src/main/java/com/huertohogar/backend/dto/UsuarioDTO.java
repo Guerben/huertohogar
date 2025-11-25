@@ -13,10 +13,11 @@ public class UsuarioDTO {
     private String rolNombre;
     private LocalDateTime fechaCreacion;
 
+    public UsuarioDTO() {
+    }
 
-    public UsuarioDTO(){}
-
-    public UsuarioDTO(Long id, String nombre, String email, String password,String telefono, String direccion, Long rolId, String rolNombre, LocalDateTime fechaCreacion) {
+    public UsuarioDTO(Long id, String nombre, String email, String password, String telefono, String direccion,
+            Long rolId, String rolNombre, LocalDateTime fechaCreacion) {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
@@ -27,7 +28,6 @@ public class UsuarioDTO {
         this.rolNombre = rolNombre;
         this.fechaCreacion = fechaCreacion;
     }
-
 
     public Long getId() {
         return this.id;
@@ -60,7 +60,7 @@ public class UsuarioDTO {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
     public String getTelefono() {
         return this.telefono;
     }
@@ -69,14 +69,13 @@ public class UsuarioDTO {
         this.telefono = telefono;
     }
 
-    public String getDireccion(){
+    public String getDireccion() {
         return this.direccion;
     }
 
-    public void setDireccion(String direccion){
+    public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
-
 
     public Long getRolId() {
         return this.rolId;
@@ -102,5 +101,13 @@ public class UsuarioDTO {
         this.fechaCreacion = fechaCreacion;
     }
 
+    // Compatibility alias for older code/tests that expect Spanish-style getter
+    public Long getId_usuario() {
+        return this.id;
+    }
+
+    public void setId_usuario(Long id) {
+        this.id = id;
+    }
 
 }

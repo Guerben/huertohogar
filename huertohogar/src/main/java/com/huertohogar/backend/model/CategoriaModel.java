@@ -24,7 +24,7 @@ public class CategoriaModel {
     @Column(columnDefinition = "TEXT")
     private String descripcion;
 
-    @Column(length = 1000)
+    @Column(name = "imagen", length = 1000)
     private String imagenurl;
 
     @Column(nullable = false)

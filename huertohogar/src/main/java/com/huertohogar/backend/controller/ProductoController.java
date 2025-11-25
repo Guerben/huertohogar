@@ -11,10 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.huertohogar.backend.model.Producto;
+import com.huertohogar.backend.dto.ProductoDto;
 import com.huertohogar.backend.service.ProductoService;
-
-
 
 @RestController
 @RequestMapping("/api/productos")
@@ -23,27 +21,27 @@ public class ProductoController {
 
     private final ProductoService service;
 
-    public ProductoController(ProductoService service){
+    public ProductoController(ProductoService service) {
         this.service = service;
     }
 
     @GetMapping
-    public List<Producto> listar(){
+    public List<ProductoDto> listar() {
         return service.listarProductos();
     }
 
     @PostMapping
-    public Producto guardar(@RequestBody Producto producto){
+    public ProductoDto guardar(@RequestBody ProductoDto producto) {
         return service.guardarProducto(producto);
     }
-    
+
     @GetMapping("/{id}")
-    public Producto obtener(@PathVariable Long id){
+    public ProductoDto obtener(@PathVariable Long id) {
         return service.obtenerPorId(id);
     }
 
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id){
+    public void eliminar(@PathVariable Long id) {
         service.eliminar(id);
     }
 

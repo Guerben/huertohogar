@@ -1,0 +1,2 @@
+id,nombre,email,password,telefono,direccion,rol_id,fecha_registro
+1,Admin,admin@huertohogar.cl,$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy,+56911111111,Santiago,1,"2025-11-17 21:00:48"

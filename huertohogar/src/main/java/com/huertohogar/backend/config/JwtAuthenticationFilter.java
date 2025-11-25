@@ -25,7 +25,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private JwtUtil jwtUtil;
 
     @Override
-    protected void doFilterInternal(@SuppressWarnings("null") HttpServletRequest request, @SuppressWarnings("null") HttpServletResponse response, @SuppressWarnings("null") FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@SuppressWarnings("null") HttpServletRequest request,
+            @SuppressWarnings("null") HttpServletResponse response, @SuppressWarnings("null") FilterChain filterChain)
+            throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
 
         String token = null;
@@ -35,18 +37,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             try {
                 email = jwtUtil.obtenerEmailDelToken(token);
-            } catch (Exception e){
-                logger.error(e.getMessage(),e);
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
             }
         }
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             if (jwtUtil.validarToken(token)) {
-                String rol = jwtUtil.obtenerEmailDelToken(token);
+                // Obtener rol real desde el token y construir la autoridad en formato
+                // ROLE_<ROL>
+                String rol = jwtUtil.obtenerRolDelToken(token);
+                String authority = (rol != null && !rol.isEmpty()) ? ("ROLE_" + rol.toUpperCase()) : "ROLE_USER";
 
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email,
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                        email,
                         null,
-                        Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER" + rol)));
+                        Collections.singletonList(new SimpleGrantedAuthority(authority)));
 
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
